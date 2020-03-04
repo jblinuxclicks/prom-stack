@@ -1,6 +1,6 @@
 up:
-	docker-compose down
-	docker-compose up -d
+	podman-compose down
+	podman-compose up -d
 	./create-datasource.sh
 	@echo
 	@echo
@@ -17,5 +17,5 @@ up:
 reload-prom:
 	curl -X POST http://localhost:9090/-/reload
 
-stop:
-	docker-compose down
+down:
+	podman-compose down
