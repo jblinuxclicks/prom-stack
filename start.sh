@@ -1,7 +1,13 @@
 #!/bin/bash
 podman-compose down 2> /dev/null
 
-mkdir -p prometheus/alerts
+mkdir -p grafana/data grafana/logs grafana/datasources grafana/dashboards
+mkdir -p prometheus/alerts prometheus/data
+
+# workaround for development, for production create users prometheus/grafana
+chmod -R 777 prometheus 2> /dev/null
+chmod -R 777 grafana 2> /dev/null
+
 podman-compose up -d
 
 echo "Prometheus:   http://localhost:9090"

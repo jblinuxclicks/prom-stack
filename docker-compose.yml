@@ -9,6 +9,7 @@ services:
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
       - ./prometheus/alerts/:/etc/prometheus/rules.d/
+      - ./prometheus/data/:/prometheus/
 
   pushgateway:
     image: prom/pushgateway:latest
@@ -20,7 +21,15 @@ services:
     ports:
       - 3000:3000
     environment:
-      - GF_SECURITY_ADMIN_PASSWORD=password
+      - GF_SECURITY_ADMIN_USER=${ADMIN_USER:-admin}
+      - GF_SECURITY_ADMIN_PASSWORD=${ADMIN_PASSWORD:-password}
+      - GF_LOG_MODE=console file
+      - GF_LOG_LEVEL=info
+    volumes:
+      - ./grafana/logs:/var/log/grafana
+      - ./grafana/data:/var/lib/grafana
+      - ./grafana/datasources:/etc/grafana/datasources
+      - ./grafana/dashboards:/etc/grafana/dashboards
 
   alertmanager:
     image: prom/alertmanager:latest
