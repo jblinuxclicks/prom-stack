@@ -1,2 +1,2 @@
 #!/bin/bash
-podman-compose down
+docker-compose down

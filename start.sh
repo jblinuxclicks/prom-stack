@@ -8,7 +8,7 @@ mkdir -p prometheus/alerts prometheus/data
 chmod -R 777 prometheus 2> /dev/null
 chmod -R 777 grafana 2> /dev/null
 
-podman-compose up -d
+docker-compose up -d
 
 echo "Prometheus:   http://localhost:9090"
 echo "Grafana:      http://localhost:3000"

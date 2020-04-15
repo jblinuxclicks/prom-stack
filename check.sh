@@ -15,7 +15,7 @@ echo
 echo
 
 echo "Listening ports:"
-netstat -lt | grep -E "9090|9091|9093|3000" | indent
+netstat -lt | grep -E "9090|3000" | indent
 
 echo "Instantiated pods:"
 podman ps | grep prom-stack | indent

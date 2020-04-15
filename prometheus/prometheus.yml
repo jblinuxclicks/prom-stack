@@ -10,11 +10,11 @@ global:
       monitor: 'prom-stack'
 
 # Alertmanager configuration
-alerting:
-  alertmanagers:
-  - static_configs:
-    - targets:
-      - alertmanager:9093
+#alerting:
+#  alertmanagers:
+#  - static_configs:
+#    - targets:
+#      - alertmanager:9093
 
 # Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
 rule_files:
@@ -25,7 +25,5 @@ scrape_configs:
   - job_name: 'prom-stack'
     static_configs:
       - targets:
-        - prometheus:9090
-        - pushgateway:9091
-        - alertmanager:9093
-        - grafana:3000
+        - localhost:9090
+        - localhost:3000
