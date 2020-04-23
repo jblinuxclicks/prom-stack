@@ -5,11 +5,10 @@ services:
     image: prom/prometheus:v2.17.1
     command: --config.file=/etc/prometheus/prometheus.yml
     ports:
-      - 9090:9090
-    network_mode: host
+      - "9090:9090"
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
-      - ./prometheus/data/:/prometheus/
+      - prometheus_data:/prometheus/
 
 #  pushgateway:
 #    image: prom/pushgateway:latest
@@ -19,16 +18,17 @@ services:
   grafana:
     image: grafana/grafana:6.7.2
     ports:
-      - 3000:3000
-    network_mode: host
+      - "3000:3000"
+#    links:
+#      - "prometheus:prometheus"
     environment:
-      - GF_SECURITY_ADMIN_USER=${ADMIN_USER:-admin}
-      - GF_SECURITY_ADMIN_PASSWORD=${ADMIN_PASSWORD:-password}
+      - GF_SECURITY_ADMIN_USER=${ADMIN_USER:-devops}
+      - GF_SECURITY_ADMIN_PASSWORD=${ADMIN_PASSWORD:-devops}
       - GF_LOG_MODE=console file
       - GF_LOG_LEVEL=info
     volumes:
-      - ./grafana/logs:/var/log/grafana
-      - ./grafana/data:/var/lib/grafana
+      - grafana_log:/var/log/grafana
+      - grafana_data:/var/lib/grafana
       - ./grafana/datasources:/etc/grafana/datasources
       - ./grafana/dashboards:/etc/grafana/dashboards
 
@@ -39,3 +39,8 @@ services:
 #      - 9093:9093
 #    volumes:
 #      - ./alertmanager/alertmanager.yml:/etc/alertmanager/alertmanager.yml
+
+volumes:
+  grafana_data: null
+  prometheus_data: null
+  grafana_log: null
